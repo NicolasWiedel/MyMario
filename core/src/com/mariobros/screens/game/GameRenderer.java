@@ -3,6 +3,7 @@ package com.mariobros.screens.game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -33,6 +34,10 @@ public class GameRenderer {
     /** Instanz des DebugCameraControllers aus der GameUtil **/
     private DebugCameraController debugCameraController;
 
+//    ZU TESTZWECKEN
+    private Texture texture;
+    private float size;
+
     // == constructor ==
     /** Konstruktor mit GameWorld SpriteBatch und AssetManager als Parameter **/
     public GameRenderer(GameScreen game,SpriteBatch batch, AssetManager assetManager ){
@@ -46,13 +51,13 @@ public class GameRenderer {
     /** Methode zur initialisierung aller Graphikelemente **/
     private void init(){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
+        viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH,
+                GameConfig.WORLD_SHOWN_HEIGHT, camera);
 
         renderer = new ShapeRenderer();
         debugCameraController = new DebugCameraController();
-
-
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
+
     }
 
     // == public methods ==
@@ -66,6 +71,8 @@ public class GameRenderer {
         debugCameraController.applyTo(camera);
 
         renderDebug();
+
+        renderHud();
     }
 
     /** Methode für das Ändern des Viewports **/
@@ -106,5 +113,14 @@ public class GameRenderer {
 
         // revert to old color
         renderer.setColor(oldColor);
+    }
+
+    /** Methode für das Zeichnen des HUD **/
+    private void renderHud(){
+        batch.setProjectionMatrix(game.getController().getHud().getStage().getCamera().combined);
+        game.getController().getHud().getStage().draw();
+        batch.begin();
+        batch.draw(new Texture("badlogic.jpg"), 0f, 0f, 8f, 8f);
+        batch.end();
     }
 }
