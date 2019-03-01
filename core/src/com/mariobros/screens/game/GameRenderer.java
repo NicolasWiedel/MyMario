@@ -1,7 +1,9 @@
 package com.mariobros.screens.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -79,7 +81,7 @@ public class GameRenderer {
     public void resize(int width, int height){
         viewport.update(width, height, true);
 
-        ViewportUtils.debugPixelsPerUnit(viewport);
+//        ViewportUtils.debugPixelsPerUnit(viewport);
     }
 
     /** Methode für disposing **/
@@ -119,8 +121,5 @@ public class GameRenderer {
     private void renderHud(){
         batch.setProjectionMatrix(game.getController().getHud().getStage().getCamera().combined);
         game.getController().getHud().getStage().draw();
-        batch.begin();
-        batch.draw(new Texture("badlogic.jpg"), 0f, 0f, 8f, 8f);
-        batch.end();
     }
 }

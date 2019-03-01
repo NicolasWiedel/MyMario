@@ -33,6 +33,7 @@ public class Hud implements Disposable {
     private Label marioLabel;
 
     public Hud(SpriteBatch batch) {
+
         //define our tracking variables
         worldTimer = 300;
         timeCount = 0;
