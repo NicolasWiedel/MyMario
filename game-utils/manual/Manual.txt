@@ -1,0 +1,167 @@
+﻿
+Anleitung zur Nutzung der LibGDX-Game-Utils
+
+1. gewünschtes LibGDX Project erstellen
+
+2. kopiere den game-utils Pfad in den Root-Verzeichnis des Projekts
+
+3. im Verzeichnis gradle, öffne die Datei settings.gradle
+
+4. füge als weiters Modul game-utils nach desktop in den include-Befehl ein
+
+5. öffne build.gradle im gradle Pfad
+
+6. kopiere project(":core") und füge es darüber nocheinmal ein
+
+7. eines der project(":core") umbenennen in project(":game-utils")
+
+8. in project(":core") dependencies compile "com.badlogicgames.gdx:gdx:$gdxVersion" ändern in compile project(":game-utils")
+
+daraufhin ist eine Nutztung der Klassen aus dem game-util Modul möglich!
+
+
+I. Aufbau der grundlegenden Struktur des Spiels und Ausgabe eines Bildes in der Mitte
+
+I.1. erstellen einer Klasse GameConfig.java, die die Konstanten des Spiels beinhaltet.
+	die notwendigen Konstanten für die Grundlegenden Einstellungen sind
+	- WIDTH
+	- HEIGHT
+	- WORLD_WIDTH
+	- WORLD:HEIGHT
+	- WORLD_CENTER_X
+	- WORLD_CENTER_Y
+	
+	Als Konstruktor wird nur eine leerer privater benötigt, da keine Instanz der klasse erzeugt wird. 
+	
+I.2. DesktopLauncher anpassen
+	hier wird eine LWJGL-Application intanz mit Verweis auf die Gameklasse des Spiels erzeugt.
+	zentrale einstellungen dafür inder Konfiguration sind
+	- Icon und Titel in der Kopfleiste
+	- Breit und Höhe
+
+I.3. Game-Klasse im core-Modul:
+	in unserem Spiel die Klasse RWA( RheinwerkAdventure)
+    - leitet sich von GameBase aus game-utils ab.
+    - dient als einziges zur Erzeugung des AnfangsScreen. in unserem Fall zu erst die GameScreen
+    später wird hier die LoadingScreeen geöffnet
+
+II. Aufbau des MVC-Patterns
+
+II.1. GameScreen - Klasse
+    Die GameScreen Klasse leitet sich von der Klasse ScreenAdapter ab und implementiert folgen
+    Attribute, Konstruktoren und Methoden:
+    - Atribute
+        final GameBase
+        final AssetManager
+        final SpriteBach
+        GameWorld
+        GameController
+        GameRenderer
+        EntityFactory
+
+        die GameBase wird im Konstruktor übergeben und gibt damit die Möglichkeit auf den
+        Assetmanager und den SpriteBatch aus ihr zuzugreifen.
+
+    - Konstruktor
+        Dem Konstruktor wird die GameBase übergeben und erlaubt damit den Zugriff aud diese Klasse.
+        Assetmanager und Spritebatch werden mit den Gettern aus der GameBase Klasse definiert
+
+    - Methoden
+        show()
+            initialisiert alle Attribute, die nicht im Konstruktor abgeleitet sind
+        render()
+            ruft die update Methode aus gen GameController und die render Methode aus
+            dem GameController auf
+        resize()
+            ruft die resize aus dem GameRenderer auf
+        hide()
+            ruft die klasseneigene dispose Methode auf
+        dispose()
+            ruft die dispose Methode aus GameRenderer auf
+
+II.2. GameWorld - Klasse (Model)
+    Die GameWorld Klasse verarbetet die Spiellogik und bildet damit das Model unseres MVC
+     Attribute, Konstruktoren und Methoden:
+     - Atribute
+            final EntityFactory
+            boolean drawGrid = false
+            boolean drawDebug = false
+
+     - Konstruktor
+         Dem Konstruktor wir die EntityFactory übergeben und gibt den Zugriff frei
+         es wird die private init Methode aufgerufen
+
+     - Methoden
+        init()
+            initialiesiert alle weiteren Gameobjekte
+        update()
+            update für alle Vorgänge der Spielelogik, wird alle in private Methoden geschrieben
+            und hier aufgerufen
+        getter für drawGrid und drawDebug
+        toggleDrawGrid()
+        toggleDebug()
+            methode zum sezten deer beiden Attribute
+            (drwaGrid = !drawGrid und drawDebug = !drawDebug)
+
+II.3. GameController - Klasse (Controller)
+    Die GameController Klasse bildet das Bindeglied zwischen dem Spielmodell und der View
+    Attribute, Konstruktoren und Methoden:
+         - Atribute
+            final GameWorld
+            final GameRenderer
+
+          - Konstruktor
+            dem Konstruktor wird die GameWorld und die GameRenderer Klasse übergeben um den Zugriff
+            darauf frei zu geben
+
+         - Methoden
+            update()
+                überprüft den DebugInput und das update der GameWorld
+            - private handleDebugInput
+                stellt die Tasten für die Verarbeitung des Debuinputs dar
+
+II.3. GameRenderer - Klasse (View)
+    Die GameRenderer Klasse bildet die Stelle für alle Anzeigen unseres Spiels
+    Attribute, Konstruktoren und Methoden:
+        - Attribute
+            final GameWorld
+            final SpriteBatch
+            final AssetManager
+
+            OrthographicCamera
+            Viewport
+
+        - Konstruktor
+            dem Konstruktor werden GameWorld Spritebatch und AssetManager übergeben und
+            damit der Zugriff darauf gewährleistet
+            ini()
+
+        - Methoden
+            init()
+                initialisiert alle Notwendigen Bestandteile der Graphik; camera, viewport
+                renderer debugCameracontroller und das setzen derPosition des DebugCameraControllers
+            render()
+                Methode für das rendering
+                // clear screen
+                        GdxUtils.clearScreen();
+
+                // debug
+                debugCameraController.handleDebugInput(delta);
+                debugCameraController.applyTo(camera);
+                renderDebug();
+            resize()
+                update des Viewports
+            dispose()
+
+            renderDebug()
+
+
+II.4. Spieler hinzufügen
+    Erstellen der Spieler Klasse
+    sie erbt von EntityBase; keine spezielle Attribute, leerer Konstruktor
+
+    Erstellen einer Methode createPlayer in Entity Factory
+
+    PlayerInputController eerstellen mit Steuerung von Keyboard und Gamepad
+
+Dies bildet die Grundlage für alle weiteren zu entwickenden Spiel!
