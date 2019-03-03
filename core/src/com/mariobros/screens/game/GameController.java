@@ -1,6 +1,10 @@
 package com.mariobros.screens.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.mariobros.scenes.Hud;
+
+import java.security.Key;
 
 public class GameController  {
 
@@ -25,7 +29,9 @@ public class GameController  {
 
     /** Methode zur Spielsimulation */
     public void update(float delta){
-
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            game.getRenderer().getCamera().position.x += 100f * delta;
+        }
     }
 
     // == public methods ==

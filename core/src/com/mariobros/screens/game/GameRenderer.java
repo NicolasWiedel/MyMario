@@ -1,11 +1,13 @@
 package com.mariobros.screens.game;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -13,6 +15,7 @@ import com.gameutils.GdxUtils;
 import com.gameutils.ViewportUtils;
 import com.gameutils.debug.DebugCameraController;
 import com.mariobros.GameConfig;
+import com.mariobros.assets.AssetDescriptors;
 
 public class GameRenderer {
 
@@ -25,6 +28,7 @@ public class GameRenderer {
     private final AssetManager assetManager;
 
     private OrthogonalTiledMapRenderer mapRenderer;
+    private TiledMap map;
 
     /** Instanz der Kamera **/
     private OrthographicCamera camera;
@@ -54,10 +58,12 @@ public class GameRenderer {
     /** Methode zur initialisierung aller Graphikelemente **/
     private void init(){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH,
-                GameConfig.WORLD_SHOWN_HEIGHT, camera);
+        viewport = new FitViewport(GameConfig.WIDTH,
+                GameConfig.HEIGHT, camera);
 
-        mapRenderer = new OrthogonalTiledMapRenderer()
+        map = assetManager.get(AssetDescriptors.LEVEL1);
+        mapRenderer = new OrthogonalTiledMapRenderer(map);
+
         renderer = new ShapeRenderer();
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
@@ -73,6 +79,8 @@ public class GameRenderer {
         debugCameraController.handleDebugInput(delta);
         debugCameraController.applyTo(camera);
 
+        renderMap();
+
         renderDebug();
 
         renderHud();
@@ -82,12 +90,18 @@ public class GameRenderer {
     public void resize(int width, int height){
         viewport.update(width, height, true);
 
-//        ViewportUtils.debugPixelsPerUnit(viewport);
+        ViewportUtils.debugPixelsPerUnit(viewport);
     }
 
     /** Methode für disposing **/
     public void dispose(){
 
+    }
+
+    // == private methods ==
+    private void renderMap(){
+        mapRenderer.setView(camera);
+        mapRenderer.render();
     }
 
     /** Methode für das RenderingDebug **/
@@ -122,5 +136,9 @@ public class GameRenderer {
     private void renderHud(){
         batch.setProjectionMatrix(game.getController().getHud().getStage().getCamera().combined);
         game.getController().getHud().getStage().draw();
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 }

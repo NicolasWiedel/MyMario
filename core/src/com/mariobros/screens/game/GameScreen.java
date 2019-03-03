@@ -80,4 +80,8 @@ public class GameScreen extends ScreenAdapter {
     public GameController getController() {
         return controller;
     }
+    /** getter für GameRenderer */
+    public GameRenderer getRenderer() {
+        return renderer;
+    }
 }

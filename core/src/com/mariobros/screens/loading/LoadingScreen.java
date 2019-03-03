@@ -16,20 +16,19 @@ import com.mariobros.screens.game.GameScreen;
 public class LoadingScreen extends LoadingScreenBase {
 
     // == attributes ==
-    private TmxMapLoader mapLoader;
-    private TiledMap map;
 
     //== construktor ==
     public LoadingScreen(GameBase game){
         super(game);
-        mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level1.tmx");
     }
 
     @Override
     protected Array<AssetDescriptor> getAssetDescriptors() {
         return AssetDescriptors.ALL;
     }
+
+    @Override
+    protected Array<String> getMaps() { return AssetDescriptors.LEVELS; }
 
     @Override
     protected void onLoadDone() {
@@ -44,9 +43,5 @@ public class LoadingScreen extends LoadingScreenBase {
     @Override
     protected float getHudHeight() {
         return GameConfig.LOADING_SCREEN_HEIGHT;
-    }
-
-    public TiledMap getMap() {
-        return map;
     }
 }

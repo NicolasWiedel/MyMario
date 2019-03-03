@@ -13,21 +13,23 @@ public class AssetDescriptors {
     // == constants ==
     public static final Array<AssetDescriptor> ALL = new Array<AssetDescriptor>();
 
-    public static final Array<TiledMap> LEVELS = new Array<TiledMap>();
+    public static final Array<String> LEVELS = new Array<String>();
 
     public static TiledMap level1;
 
     public static final AssetDescriptor<BitmapFont> FONT =
             new AssetDescriptor<BitmapFont>(AssetPaths.SCORE_FONT,BitmapFont.class);
 
+    public static final String LEVEL1 = AssetPaths.LEVEL1_MAP;
+
     // == static init ==
     static{
-        ALL.add(
-              FONT
+        ALL.addAll(
+                FONT
         );
 
-        LEVELS.add(
-              level1
+        LEVELS.addAll(
+                LEVEL1
         );
     }
 

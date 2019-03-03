@@ -3,8 +3,11 @@ package com.gameutils.screen.loading;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -49,6 +52,8 @@ public abstract class LoadingScreenBase extends ScreenAdapter {
     // == abstract methods ==
     protected abstract Array<AssetDescriptor> getAssetDescriptors();
 
+    protected abstract Array<String> getMaps();
+
     protected abstract void onLoadDone();
 
     // == public methods ==
@@ -67,6 +72,10 @@ public abstract class LoadingScreenBase extends ScreenAdapter {
 
         for (AssetDescriptor descriptor : getAssetDescriptors()) {
             assetManager.load(descriptor);
+        }
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+        for (String levels : getMaps()){
+            assetManager.load(levels, TiledMap.class);
         }
     }
 

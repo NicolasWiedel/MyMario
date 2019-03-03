@@ -8,6 +8,8 @@ public class AssetPaths {
     // == constants ==
     public static final String SCORE_FONT = "fonts/score.fnt";
 
+    public static final String LEVEL1_MAP = "level1.tmx";
+
     // == constructor ==
     private AssetPaths(){
 
