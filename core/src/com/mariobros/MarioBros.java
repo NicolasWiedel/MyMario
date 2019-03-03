@@ -2,6 +2,7 @@ package com.mariobros;
 
 import com.gameutils.game.GameBase;
 import com.mariobros.screens.game.GameScreen;
+import com.mariobros.screens.loading.LoadingScreen;
 
 /**
  * Die Klasse stellt eine Basis Instanz der Game Klasse dar
@@ -13,6 +14,6 @@ public class MarioBros extends GameBase {
 	 */
 	@Override
 	public void postCreate() {
-		setScreen(new GameScreen(this));
+		setScreen(new LoadingScreen(this));
 	}
 }

@@ -20,7 +20,7 @@ public class GameController  {
     // == init ==
     /** Initialisierungsmethode **/
     private void init() {
-        hud = new Hud(game.getBatch());
+        hud = new Hud(game.getBatch(), game.getAssetManager());
     }
 
     /** Methode zur Spielsimulation */

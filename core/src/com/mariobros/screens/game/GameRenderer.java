@@ -1,13 +1,12 @@
 package com.mariobros.screens.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gameutils.GdxUtils;
@@ -24,6 +23,8 @@ public class GameRenderer {
     private final SpriteBatch batch;
     /** Instanz des AssetManagers **/
     private final AssetManager assetManager;
+
+    private OrthogonalTiledMapRenderer mapRenderer;
 
     /** Instanz der Kamera **/
     private OrthographicCamera camera;
@@ -56,10 +57,10 @@ public class GameRenderer {
         viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH,
                 GameConfig.WORLD_SHOWN_HEIGHT, camera);
 
+        mapRenderer = new OrthogonalTiledMapRenderer()
         renderer = new ShapeRenderer();
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
-
     }
 
     // == public methods ==

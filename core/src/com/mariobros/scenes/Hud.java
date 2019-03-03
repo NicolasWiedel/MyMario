@@ -1,5 +1,7 @@
 package com.mariobros.scenes;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,12 +13,14 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mariobros.GameConfig;
+import com.mariobros.assets.AssetDescriptors;
 
 public class Hud implements Disposable {
 
     //Scene2D.ui Stage and its own Viewport for HUD
     private Stage stage;
     private Viewport viewport;
+    private BitmapFont font;
 
     //Mario score/time Tracking Variables
     private int worldTimer;
@@ -32,7 +36,7 @@ public class Hud implements Disposable {
     private Label worldLabel;
     private Label marioLabel;
 
-    public Hud(SpriteBatch batch) {
+    public Hud(SpriteBatch batch, AssetManager assetManager) {
 
         //define our tracking variables
         worldTimer = 300;
@@ -44,6 +48,7 @@ public class Hud implements Disposable {
         viewport = new FitViewport(GameConfig.WIDTH,
                 GameConfig.HEIGHT ,
                 new OrthographicCamera());
+        font = assetManager.get(AssetDescriptors.FONT);
         stage = new Stage(viewport, batch);
 
         //define a table used to organize our hud's labels
@@ -55,17 +60,17 @@ public class Hud implements Disposable {
 
         //define our labels using the String, and a Label style consisting of a font and color
         countdownLabel = new Label(String.format("%03d", worldTimer),
-                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                new Label.LabelStyle(font, Color.WHITE));
         scoreLabel = new Label(String.format("%06d", score),
-                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                new Label.LabelStyle(font, Color.WHITE));
         timeLabel = new Label("TIME",
-                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                new Label.LabelStyle(font, Color.WHITE));
         levelLabel = new Label("1-1",
-                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                new Label.LabelStyle(font, Color.WHITE));
         worldLabel = new Label("WORLD",
-                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                new Label.LabelStyle(font, Color.WHITE));
         marioLabel = new Label("MARIO",
-                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                new Label.LabelStyle(font, Color.WHITE));
         //add our labels to our table, padding the top, and giving them all equal width with expandX
         table.add(marioLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);

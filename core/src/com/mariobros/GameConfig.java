@@ -4,10 +4,15 @@ public class GameConfig {
 
     // == constants ==
     // only for desktop
-    /** width of the screen in pixels **/
+    /** width of the SameScreen in pixels **/
     public static final int WIDTH = 960;   // pixels
-    /** height of the screen in pixels **/
+    /** height of the GameScreen in pixels **/
     public static final int HEIGHT = 624;  // pixels
+
+    /** width of the LoadingScreen in pixels **/
+    public static final int LOADING_SCREEN_WIDTH = 960;   // pixels
+    /** height of the LoadingScreen in pixels **/
+    public static final int LOADING_SCREEN_HEIGHT = 624;  // pixels
 
     /** width of the screen in world units **/
     public static final float WORLD_WIDTH = 240f;
