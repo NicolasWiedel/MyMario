@@ -61,7 +61,6 @@ public class GameRenderer {
         viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH,
                 GameConfig.WORLD_SHOWN_HEIGHT, camera);
 
-
         map = assetManager.get(AssetDescriptors.LEVEL1);
         mapRenderer = new OrthogonalTiledMapRenderer(map);
 
@@ -79,6 +78,7 @@ public class GameRenderer {
         // debug
         debugCameraController.handleDebugInput(delta);
         debugCameraController.applyTo(camera);
+//        camera.update();
 
         renderMap();
 
