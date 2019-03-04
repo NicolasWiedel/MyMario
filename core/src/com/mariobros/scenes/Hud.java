@@ -45,8 +45,8 @@ public class Hud implements Disposable {
 
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
-        viewport = new FitViewport(GameConfig.WIDTH,
-                GameConfig.HEIGHT ,
+        viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH * 2,
+                GameConfig.WORLD_SHOWN_HEIGHT * 2 ,
                 new OrthographicCamera());
         font = assetManager.get(AssetDescriptors.FONT);
         stage = new Stage(viewport, batch);

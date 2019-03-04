@@ -58,8 +58,9 @@ public class GameRenderer {
     /** Methode zur initialisierung aller Graphikelemente **/
     private void init(){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.WIDTH,
-                GameConfig.HEIGHT, camera);
+        viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH,
+                GameConfig.WORLD_SHOWN_HEIGHT, camera);
+
 
         map = assetManager.get(AssetDescriptors.LEVEL1);
         mapRenderer = new OrthogonalTiledMapRenderer(map);
@@ -89,7 +90,6 @@ public class GameRenderer {
     /** Methode für das Ändern des Viewports **/
     public void resize(int width, int height){
         viewport.update(width, height, true);
-
         ViewportUtils.debugPixelsPerUnit(viewport);
     }
 

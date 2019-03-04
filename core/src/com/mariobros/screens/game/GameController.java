@@ -29,8 +29,9 @@ public class GameController  {
 
     /** Methode zur Spielsimulation */
     public void update(float delta){
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            game.getRenderer().getCamera().position.x += 100f * delta;
+        if (Gdx.input.isTouched()){
+            game.getRenderer().getCamera().position.x += 100f;
+            System.out.println("isTouched");
         }
     }
 
