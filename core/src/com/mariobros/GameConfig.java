@@ -20,12 +20,12 @@ public class GameConfig {
     public static final float WORLD_HEIGHT = 13f;
 
     /** width of the shown screen in world units **/
-    public static final float WORLD_SHOWN_WIDTH = 400f;
+    public static final float V_WIDTH = 400f;
     /** height of the screen in world units **/
-    public static final float WORLD_SHOWN_HEIGHT = 208f;
+    public static final float V_HEIGHT = 208f;
 
     /** middle in x direction of the screen in world units **/
-    public static final float WORLD_CENTER_X = WORLD_SHOWN_WIDTH / 2f;
+    public static final float WORLD_CENTER_X = V_WIDTH / 2f;
     /** middle in y direction of the screen in world units **/
-    public static final float WORLD_CENTER_Y = WORLD_SHOWN_HEIGHT / 2f;
+    public static final float WORLD_CENTER_Y = V_HEIGHT / 2f;
 }

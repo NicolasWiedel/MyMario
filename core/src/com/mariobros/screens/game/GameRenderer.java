@@ -1,6 +1,5 @@
 package com.mariobros.screens.game;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gameutils.GdxUtils;
@@ -41,9 +41,8 @@ public class GameRenderer {
     /** Instanz des DebugCameraControllers aus der GameUtil **/
     private DebugCameraController debugCameraController;
 
-//    ZU TESTZWECKEN
-    private Texture texture;
-    private float size;
+    /** Box2d variables */
+    private Box2DDebugRenderer b2dr;
 
     // == constructor ==
     /** Konstruktor mit GameWorld SpriteBatch und AssetManager als Parameter **/
@@ -58,11 +57,13 @@ public class GameRenderer {
     /** Methode zur initialisierung aller Graphikelemente **/
     private void init(){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.WORLD_SHOWN_WIDTH,
-                GameConfig.WORLD_SHOWN_HEIGHT, camera);
+        viewport = new FitViewport(GameConfig.V_WIDTH,
+                GameConfig.V_HEIGHT, camera);
 
         map = assetManager.get(AssetDescriptors.LEVEL1);
         mapRenderer = new OrthogonalTiledMapRenderer(map);
+
+        b2dr = new Box2DDebugRenderer();
 
         renderer = new ShapeRenderer();
         debugCameraController = new DebugCameraController();
@@ -77,8 +78,8 @@ public class GameRenderer {
 
         // debug
         debugCameraController.handleDebugInput(delta);
-        debugCameraController.applyTo(camera);
-//        camera.update();
+//        debugCameraController.applyTo(camera);
+        camera.update();
 
         renderMap();
 
@@ -102,6 +103,9 @@ public class GameRenderer {
     private void renderMap(){
         mapRenderer.setView(camera);
         mapRenderer.render();
+
+        // rebder Box2DDebuglines
+        b2dr.render(game.getController().getWorld(), camera.combined);
     }
 
     /** Methode für das RenderingDebug **/
@@ -140,5 +144,9 @@ public class GameRenderer {
 
     public OrthographicCamera getCamera() {
         return camera;
+    }
+
+    public TiledMap getMap() {
+        return map;
     }
 }
