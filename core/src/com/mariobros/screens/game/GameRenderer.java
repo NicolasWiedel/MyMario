@@ -94,7 +94,7 @@ public class GameRenderer {
 
     /** Methode für disposing **/
     public void dispose(){
-
+        b2dr.dispose();
     }
 
     // == private methods ==

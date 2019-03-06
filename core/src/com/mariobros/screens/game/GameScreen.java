@@ -61,6 +61,7 @@ public class GameScreen extends ScreenAdapter {
     /** Methode für die Beendigung des Screens **/
     @Override
     public void dispose() {
+        controller.dispose();
         renderer.dispose();
     }
 

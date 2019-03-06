@@ -42,13 +42,13 @@ public class GameInput {
 
         // Keyboard input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            velocity.x = -1;
+            velocity.x = -0.1f;
         }if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            velocity.x = 1;
-        }if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            velocity.y = 1;
+            velocity.x = 0.1f;
+        }if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            velocity.y = 4;
         }if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            velocity.y = -1;
+            velocity.y = 0;
         }
 
         // gamepad input

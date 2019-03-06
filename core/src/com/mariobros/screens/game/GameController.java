@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mariobros.B2dWorldCreator;
 import com.mariobros.GameConfig;
 import com.mariobros.assets.AssetDescriptors;
 import com.mariobros.scenes.Hud;
@@ -54,115 +55,27 @@ public class GameController  {
 
         mario = new Mario(world);
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-        // ground
-        for(MapObject object : map.getLayers().
-                get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
-                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
-                    rect.getHeight() / 2 / GameConfig.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        // pipes
-        for(MapObject object : map.getLayers().
-                get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
-                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
-                    rect.getHeight() / 2 / GameConfig.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        // bricks
-        for(MapObject object : map.getLayers().
-                get(5).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
-                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
-                    rect.getHeight() / 2 / GameConfig.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        // coins
-        for(MapObject object : map.getLayers().
-                get(4).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
-                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
-                    rect.getHeight() / 2 / GameConfig.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        // goombas
-        for(MapObject object : map.getLayers().
-                get(6).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
-                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
-                    rect.getHeight() / 2 / GameConfig.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-        // turtles
-        for(MapObject object : map.getLayers().
-                get(7).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
-                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
-                    rect.getHeight() / 2 / GameConfig.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new B2dWorldCreator(world, map);
     }
 
     /** Methode zur Spielsimulation */
     public void update(float delta){
-        mario.getB2body().applyLinearImpulse(game.getInput().getVelocity(),
-                mario.getB2body().getWorldCenter(), true);
+        if (mario.getB2body().getLinearVelocity().x <= 2f &&
+                mario.getB2body().getLinearVelocity().x >= -2f) {
+            mario.getB2body().applyLinearImpulse(game.getInput().getVelocity(),
+                    mario.getB2body().getWorldCenter(), true);
+        }
+
 
         world.step(1/60f, 6, 2);
+
+        game.getRenderer().getCamera().position.x = mario.getB2body().getPosition().x;
+    }
+
+    public void dispose(){
+        map.dispose();
+        world.dispose();
+        hud.dispose();
     }
 
     // == public methods ==
