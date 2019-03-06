@@ -56,10 +56,10 @@ public class GameRenderer {
     /** Methode zur initialisierung aller Graphikelemente **/
     private void init(){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.V_WIDTH,
-                GameConfig.V_HEIGHT, camera);
+        viewport = new FitViewport(GameConfig.V_WIDTH / GameConfig.PPM,
+                GameConfig.V_HEIGHT / GameConfig.PPM, camera);
 
-        mapRenderer = new OrthogonalTiledMapRenderer(game.getController().getMap());
+        mapRenderer = new OrthogonalTiledMapRenderer(game.getController().getMap(), 1 / GameConfig.PPM);
 
         b2dr = new Box2DDebugRenderer();
 

@@ -23,6 +23,7 @@ public class GameConfig {
     public static final float V_WIDTH = 400f;
     /** height of the screen in world units **/
     public static final float V_HEIGHT = 208f;
+    public static final float PPM = 100f;
 
     /** middle in x direction of the screen in world units **/
     public static final float WORLD_CENTER_X = V_WIDTH / 2f;

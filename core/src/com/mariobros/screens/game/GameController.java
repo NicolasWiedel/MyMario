@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mariobros.GameConfig;
 import com.mariobros.assets.AssetDescriptors;
 import com.mariobros.scenes.Hud;
 import com.mariobros.sprites.Mario;
@@ -49,7 +50,7 @@ public class GameController  {
         map = game.getAssetManager().get(AssetDescriptors.LEVEL1);
 
         // Box2D World
-        world = new World(new Vector2(0, -1),true);
+        world = new World(new Vector2(0, -10),true);
 
         mario = new Mario(world);
 
@@ -64,11 +65,13 @@ public class GameController  {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
+                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
+                    rect.getHeight() / 2 / GameConfig.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -78,11 +81,13 @@ public class GameController  {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
+                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
+                    rect.getHeight() / 2 / GameConfig.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -92,11 +97,13 @@ public class GameController  {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
+                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
+                    rect.getHeight() / 2 / GameConfig.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -106,11 +113,13 @@ public class GameController  {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
+                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
+                    rect.getHeight() / 2 / GameConfig.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -120,11 +129,13 @@ public class GameController  {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
+                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
+                    rect.getHeight() / 2 / GameConfig.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -134,11 +145,13 @@ public class GameController  {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2)  / GameConfig.PPM,
+                    (rect.getY() + rect.getHeight() / 2)  / GameConfig.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2  / GameConfig.PPM,
+                    rect.getHeight() / 2 / GameConfig.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -146,9 +159,8 @@ public class GameController  {
 
     /** Methode zur Spielsimulation */
     public void update(float delta){
-        if (Gdx.input.isTouched()){
-            game.getRenderer().getCamera().position.x += 100f * delta;
-        }
+        mario.getB2body().applyLinearImpulse(game.getInput().getVelocity(),
+                mario.getB2body().getWorldCenter(), true);
 
         world.step(1/60f, 6, 2);
     }
