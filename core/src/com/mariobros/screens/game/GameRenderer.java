@@ -28,7 +28,6 @@ public class GameRenderer {
     private final AssetManager assetManager;
 
     private OrthogonalTiledMapRenderer mapRenderer;
-    private TiledMap map;
 
     /** Instanz der Kamera **/
     private OrthographicCamera camera;
@@ -60,8 +59,7 @@ public class GameRenderer {
         viewport = new FitViewport(GameConfig.V_WIDTH,
                 GameConfig.V_HEIGHT, camera);
 
-        map = assetManager.get(AssetDescriptors.LEVEL1);
-        mapRenderer = new OrthogonalTiledMapRenderer(map);
+        mapRenderer = new OrthogonalTiledMapRenderer(game.getController().getMap());
 
         b2dr = new Box2DDebugRenderer();
 
@@ -144,9 +142,5 @@ public class GameRenderer {
 
     public OrthographicCamera getCamera() {
         return camera;
-    }
-
-    public TiledMap getMap() {
-        return map;
     }
 }
