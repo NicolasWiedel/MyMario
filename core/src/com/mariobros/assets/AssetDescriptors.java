@@ -2,6 +2,7 @@ package com.mariobros.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
 
@@ -20,12 +21,16 @@ public class AssetDescriptors {
     public static final AssetDescriptor<BitmapFont> FONT =
             new AssetDescriptor<BitmapFont>(AssetPaths.SCORE_FONT,BitmapFont.class);
 
+    public static final AssetDescriptor<TextureAtlas> MARIO_ENEMIES =
+            new AssetDescriptor<TextureAtlas>( AssetPaths.MARIO_ENEMIES, TextureAtlas.class);
+
     public static final String LEVEL1 = AssetPaths.LEVEL1_MAP;
 
     // == static init ==
     static{
         ALL.addAll(
-                FONT
+                FONT,
+                MARIO_ENEMIES
         );
 
         LEVELS.addAll(

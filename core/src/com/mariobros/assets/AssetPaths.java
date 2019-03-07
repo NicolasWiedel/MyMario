@@ -10,6 +10,8 @@ public class AssetPaths {
 
     public static final String LEVEL1_MAP = "level1.tmx";
 
+    public static final String MARIO_ENEMIES = "Mario_and_Enemies.pack";
+
     // == constructor ==
     private AssetPaths(){
 
