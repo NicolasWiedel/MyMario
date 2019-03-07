@@ -86,6 +86,10 @@ public class GameController  {
         return world;
     }
 
+    public Mario getMario() {
+        return mario;
+    }
+
     public TiledMap getMap() {
         return map;
     }

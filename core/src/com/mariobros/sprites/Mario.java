@@ -11,7 +11,7 @@ import com.mariobros.GameConfig;
 /**
  * Created by Nicolas Wiedel on 06.03.2019.
  */
-public class Mario extends Sprite {
+public class Mario extends Sprite{
 
     private World world;
     private Body b2body;
@@ -29,7 +29,7 @@ public class Mario extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(5 / GameConfig.PPM);
+        shape.setRadius(6 / GameConfig.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
     }

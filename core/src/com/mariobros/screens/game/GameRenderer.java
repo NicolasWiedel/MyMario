@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -33,6 +35,10 @@ public class GameRenderer {
     private OrthographicCamera camera;
     /** Instanz des Viewports **/
     private Viewport viewport;
+
+    private TextureAtlas marioEnemies;
+    private TextureRegion littleMario;
+    private TextureRegion marioStand;
 
     // for debug
     /** Instanz eines ShapeRenderers zu Debugzwecken **/
@@ -63,6 +69,10 @@ public class GameRenderer {
 
         b2dr = new Box2DDebugRenderer();
 
+        marioEnemies = assetManager.get(AssetDescriptors.MARIO_ENEMIES);
+        littleMario = marioEnemies.findRegion("little_mario");
+        marioStand = new TextureRegion(littleMario);
+
         renderer = new ShapeRenderer();
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
@@ -84,6 +94,8 @@ public class GameRenderer {
         renderDebug();
 
         renderHud();
+
+        renderMario();
     }
 
     /** Methode für das Ändern des Viewports **/
@@ -104,6 +116,17 @@ public class GameRenderer {
 
         // rebder Box2DDebuglines
         b2dr.render(game.getController().getWorld(), camera.combined);
+    }
+
+    private void renderMario(){
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(marioStand,
+                game.getController().getMario().getX(),
+                game.getController().getMario().getY(),
+                game.getController().getMario().getWidth(),
+                game.getController().getMario().getHeight());
+        batch.end();
     }
 
     /** Methode für das RenderingDebug **/
