@@ -47,35 +47,35 @@ public class GameController  {
     // == init ==
     /** Initialisierungsmethode **/
     private void init() {
-        hud = new Hud(game.getBatch(), game.getAssetManager());
-        map = game.getAssetManager().get(AssetDescriptors.LEVEL1);
-
-        // Box2D World
-        world = new World(new Vector2(0, -10),true);
-
-        mario = new Mario(world);
-
-        new B2dWorldCreator(world, map);
+//        hud = new Hud(game.getBatch(), game.getAssetManager());
+//        map = game.getAssetManager().get(AssetDescriptors.LEVEL1);
+//
+//        // Box2D World
+//        world = new World(new Vector2(0, -10),true);
+//
+//        mario = new Mario(world);
+//
+//        new B2dWorldCreator(world, map);
     }
 
     /** Methode zur Spielsimulation */
     public void update(float delta){
-        if (mario.getB2body().getLinearVelocity().x <= 2f &&
-                mario.getB2body().getLinearVelocity().x >= -2f) {
-            mario.getB2body().applyLinearImpulse(game.getInput().getVelocity(),
-                    mario.getB2body().getWorldCenter(), true);
-        }
+//        if (mario.getB2body().getLinearVelocity().x <= 2f &&
+//                mario.getB2body().getLinearVelocity().x >= -2f) {
+//            mario.getB2body().applyLinearImpulse(game.getInput().getVelocity(),
+//                    mario.getB2body().getWorldCenter(), true);
+//        }
 
 
-        world.step(1/60f, 6, 2);
+//        world.step(1/60f, 6, 2);
 
-        game.getRenderer().getCamera().position.x = mario.getB2body().getPosition().x;
+//        game.getRenderer().getCamera().position.x = mario.getB2body().getPosition().x;
     }
 
     public void dispose(){
-        map.dispose();
-        world.dispose();
-        hud.dispose();
+//        map.dispose();
+//        world.dispose();
+//        hud.dispose();
     }
 
     // == public methods ==
@@ -85,11 +85,9 @@ public class GameController  {
     public World getWorld() {
         return world;
     }
-
     public Mario getMario() {
         return mario;
     }
-
     public TiledMap getMap() {
         return map;
     }

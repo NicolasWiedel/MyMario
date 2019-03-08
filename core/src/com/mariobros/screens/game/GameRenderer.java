@@ -62,16 +62,15 @@ public class GameRenderer {
     /** Methode zur initialisierung aller Graphikelemente **/
     private void init(){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.V_WIDTH / GameConfig.PPM,
-                GameConfig.V_HEIGHT / GameConfig.PPM, camera);
+        viewport = new FitViewport(GameConfig.V_WIDTH, GameConfig.V_HEIGHT, camera);
 
-        mapRenderer = new OrthogonalTiledMapRenderer(game.getController().getMap(), 1 / GameConfig.PPM);
-
-        b2dr = new Box2DDebugRenderer();
-
-        marioEnemies = assetManager.get(AssetDescriptors.MARIO_ENEMIES);
-        littleMario = marioEnemies.findRegion("little_mario");
-        marioStand = new TextureRegion(littleMario);
+//        mapRenderer = new OrthogonalTiledMapRenderer(game.getController().getMap());
+//
+//        b2dr = new Box2DDebugRenderer();
+//
+//        marioEnemies = assetManager.get(AssetDescriptors.MARIO_ENEMIES);
+//        littleMario = marioEnemies.findRegion("little_mario");
+//        marioStand = new TextureRegion(littleMario, 0, 0, 16, 16);
 
         renderer = new ShapeRenderer();
         debugCameraController = new DebugCameraController();
@@ -86,16 +85,17 @@ public class GameRenderer {
 
         // debug
         debugCameraController.handleDebugInput(delta);
-//        debugCameraController.applyTo(camera);
-        camera.update();
+        debugCameraController.applyTo(camera);
+//
+//        camera.update();
 
-        renderMap();
+//        renderMap();
 
         renderDebug();
 
-        renderHud();
+//        renderHud();
 
-        renderMario();
+//        renderMario();
     }
 
     /** Methode für das Ändern des Viewports **/
@@ -106,7 +106,7 @@ public class GameRenderer {
 
     /** Methode für disposing **/
     public void dispose(){
-        b2dr.dispose();
+//        b2dr.dispose();
     }
 
     // == private methods ==
@@ -119,13 +119,9 @@ public class GameRenderer {
     }
 
     private void renderMario(){
-        batch.setProjectionMatrix(camera.combined);
+//        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(marioStand,
-                game.getController().getMario().getX(),
-                game.getController().getMario().getY(),
-                game.getController().getMario().getWidth(),
-                game.getController().getMario().getHeight());
+        batch.draw(marioStand, 200, 200, 64, 64);
         batch.end();
     }
 
